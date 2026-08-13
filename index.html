@@ -3,8 +3,23 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Momoh Daniel Osinor — Portfolio</title>
-  <meta name="description" content="Portfolio of Momoh Daniel Osinor — developer building mobile and web experiences." />
+  <title>Momoh Daniel Osinor — Developer Portfolio</title>
+  <meta name="description" content="Portfolio of Momoh Daniel Osinor — developer building mobile and web experiences with React Native, Expo, TypeScript, and Supabase." />
+  <meta name="author" content="Momoh Daniel Osinor" />
+  <meta name="theme-color" content="#0d0e12" />
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://danielosinor123-gif.github.io/" />
+  <meta property="og:title" content="Momoh Daniel Osinor — Developer Portfolio" />
+  <meta property="og:description" content="Developer crafting mobile &amp; web experiences. React Native, Expo, TypeScript, Supabase." />
+  <meta property="og:image" content="https://danielosinor123-gif.github.io/og-image.png" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Momoh Daniel Osinor — Developer Portfolio" />
+  <meta name="twitter:description" content="Developer crafting mobile &amp; web experiences. React Native, Expo, TypeScript, Supabase." />
+  <meta name="twitter:image" content="https://danielosinor123-gif.github.io/og-image.png" />
+
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -13,6 +28,7 @@
     <nav class="nav-links">
       <a href="#skills">Skills</a>
       <a href="#projects">Projects</a>
+      <a href="resume.html">Resume</a>
       <a href="#contact">Contact</a>
     </nav>
   </header>
@@ -28,6 +44,7 @@
       </p>
       <div class="hero-actions">
         <a href="#projects" class="btn btn-primary">View my work</a>
+        <a href="resume.html" class="btn btn-ghost">View resume</a>
         <a href="#contact" class="btn btn-ghost">Get in touch</a>
       </div>
     </section>
@@ -42,67 +59,82 @@
         <span class="tag">Supabase</span>
         <span class="tag">PostgreSQL</span>
         <span class="tag">Node.js</span>
+        <span class="tag">Python</span>
+        <span class="tag">Rust</span>
+        <span class="tag">C++</span>
         <span class="tag">HTML &amp; CSS</span>
         <span class="tag">Git &amp; GitHub</span>
-        <span class="tag">UI / UX Design</span>
       </div>
     </section>
 
     <section id="projects" class="section">
-      <h2 class="section-title">Projects</h2>
+      <h2 class="section-title">Featured projects</h2>
+      <div class="featured-grid">
+        <a class="featured-card" href="https://github.com/danielosinor123-gif/click" target="_blank" rel="noopener">
+          <img src="assets/click.svg" alt="Click project cover" />
+          <div class="featured-body">
+            <h3>Click</h3>
+            <p>
+              AI-powered, topic-first social platform where users create and remix ideas
+              into evolving conversation chains. Follow ideas, not people.
+            </p>
+            <div class="project-tags">
+              <span class="tag tag-small">TypeScript</span>
+              <span class="tag tag-small">React Native</span>
+              <span class="tag tag-small">Supabase</span>
+            </div>
+          </div>
+        </a>
+
+        <a class="featured-card" href="https://github.com/danielosinor123-gif/devhub" target="_blank" rel="noopener">
+          <img src="assets/devhub.svg" alt="DevHub project cover" />
+          <div class="featured-body">
+            <h3>DevHub</h3>
+            <p>
+              Where software projects become content. A demo-first platform for developers
+              to showcase, share, and get AI-powered feedback on what they build.
+            </p>
+            <div class="project-tags">
+              <span class="tag tag-small">TypeScript</span>
+              <span class="tag tag-small">AI Feedback</span>
+            </div>
+          </div>
+        </a>
+
+        <a class="featured-card" href="https://github.com/danielosinor123-gif/XV1_AdaptiveAI_Boss_Mod" target="_blank" rel="noopener">
+          <img src="assets/xv1.svg" alt="XV1 Adaptive AI Boss Mod cover" />
+          <div class="featured-body">
+            <h3>XV1 Adaptive AI Boss Mod</h3>
+            <p>
+              An adaptive AI overhaul for Dragon Ball Xenoverse 1. Bosses learn your
+              playstyle, detect patterns, and evolve across six intelligence levels.
+            </p>
+            <div class="project-tags">
+              <span class="tag tag-small">C++</span>
+              <span class="tag tag-small">Game Modding</span>
+            </div>
+          </div>
+        </a>
+
+        <a class="featured-card" href="https://github.com/danielosinor123-gif/intelharvest" target="_blank" rel="noopener">
+          <img src="assets/intelharvest.svg" alt="IntelHarvest project cover" />
+          <div class="featured-body">
+            <h3>IntelHarvest</h3>
+            <p>
+              Competitive intelligence platform with web scraping, transcription, and
+              AI-powered analysis.
+            </p>
+            <div class="project-tags">
+              <span class="tag tag-small">Python</span>
+              <span class="tag tag-small">Web Scraping</span>
+              <span class="tag tag-small">AI</span>
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <h3 class="sub-title">More projects</h3>
       <div class="project-grid">
-        <article class="project-card">
-          <h3><a class="project-link" href="https://github.com/danielosinor123-gif/click" target="_blank" rel="noopener">Click</a></h3>
-          <p>
-            AI-powered, topic-first social platform where users create and remix ideas
-            into evolving conversation chains. Follow ideas, not people.
-          </p>
-          <div class="project-tags">
-            <span class="tag tag-small">TypeScript</span>
-            <span class="tag tag-small">React Native</span>
-            <span class="tag tag-small">Supabase</span>
-          </div>
-        </article>
-
-        <article class="project-card">
-          <h3><a class="project-link" href="https://github.com/danielosinor123-gif/devhub" target="_blank" rel="noopener">DevHub</a></h3>
-          <p>
-            Where software projects become content. A demo-first platform for developers
-            to showcase, share, and get AI-powered feedback on what they build.
-          </p>
-          <div class="project-tags">
-            <span class="tag tag-small">TypeScript</span>
-            <span class="tag tag-small">AI Feedback</span>
-          </div>
-        </article>
-
-        <article class="project-card">
-          <h3><a class="project-link" href="https://github.com/danielosinor123-gif/XV1_AdaptiveAI_Boss_Mod" target="_blank" rel="noopener">XV1 Adaptive AI Boss Mod</a></h3>
-          <p>
-            An adaptive AI overhaul for Dragon Ball Xenoverse 1. Bosses learn your
-            playstyle, detect patterns, and evolve across six intelligence levels —
-            with persistent player profiles and configurable learning limits.
-          </p>
-          <div class="project-tags">
-            <span class="tag tag-small">C++</span>
-            <span class="tag tag-small">Game Modding</span>
-            <span class="tag tag-small">Machine Learning</span>
-          </div>
-        </article>
-
-        <article class="project-card">
-          <h3><a class="project-link" href="https://github.com/danielosinor123-gif/intelharvest" target="_blank" rel="noopener">IntelHarvest</a></h3>
-          <p>
-            Competitive intelligence platform with web scraping, transcription, and
-            AI-powered analysis.
-          </p>
-          <div class="project-tags">
-            <span class="tag tag-small">Python</span>
-            <span class="tag tag-small">Web Scraping</span>
-            <span class="tag tag-small">AI</span>
-          </div>
-        </article>
-
         <article class="project-card">
           <h3><a class="project-link" href="https://github.com/danielosinor123-gif/taskflow" target="_blank" rel="noopener">Taskflow</a></h3>
           <p>

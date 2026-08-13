@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="400" viewBox="0 0 800 400">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#141519"/>
+      <stop offset="1" stop-color="#0d0e12"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="400" fill="url(#bg)"/>
+  <circle cx="640" cy="80" r="120" fill="#a855f7" opacity="0.1"/>
+  <circle cx="120" cy="340" r="90" fill="#a855f7" opacity="0.06"/>
+  <rect x="56" y="296" width="72" height="6" rx="3" fill="#a855f7"/>
+  <text x="56" y="200" font-family="Arial, sans-serif" font-size="52" font-weight="bold" fill="#e8e9ed">XV1 Adaptive AI</text>
+  <text x="56" y="256" font-family="Arial, sans-serif" font-size="26" fill="#9aa0ad">Boss mod for Xenoverse 1</text>
+</svg>

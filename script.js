@@ -1,6 +1,6 @@
 document.getElementById('year').textContent = new Date().getFullYear();
 
-const cards = document.querySelectorAll('.project-card');
+const cards = document.querySelectorAll('.project-card, .featured-card');
 const observer = new IntersectionObserver(
   (entries) => {
     entries.forEach((entry) => {
