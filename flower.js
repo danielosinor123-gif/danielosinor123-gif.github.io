@@ -18,17 +18,17 @@ scene.fog = new THREE.Fog(0x0d0e12, 10, 26);
 const camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 100);
 camera.position.set(0, 2.2, 8);
 
-scene.add(new THREE.AmbientLight(0xffffff, 0.5));
+scene.add(new THREE.AmbientLight(0xffffff, 0.4));
 
-const sun = new THREE.DirectionalLight(0xfff3d6, 1.4);
+const sun = new THREE.DirectionalLight(0xfff3d6, 1.0);
 sun.position.set(4, 8, 3);
 scene.add(sun);
 
-const gold = new THREE.PointLight(0xffd700, 26, 14);
+const gold = new THREE.PointLight(0xffd700, 14, 14);
 gold.position.set(-3, 3, 2);
 scene.add(gold);
 
-const pink = new THREE.PointLight(0xff6fae, 16, 11);
+const pink = new THREE.PointLight(0xff6fae, 9, 11);
 pink.position.set(3, 2, -1);
 scene.add(pink);
 
@@ -81,10 +81,10 @@ function createPetalLayer(color, count, radius, tilt, size, curl) {
   for (let i = 0; i < count; i++) {
     const mat = new THREE.MeshStandardMaterial({
       color,
-      roughness: 0.45,
+      roughness: 0.5,
       side: THREE.DoubleSide,
       emissive: lighten(color, 0.15),
-      emissiveIntensity: 0.35,
+      emissiveIntensity: 0.1,
     });
     const mesh = new THREE.Mesh(geo, mat);
     const angle = (i / count) * Math.PI * 2 + Math.random() * 0.25;
@@ -141,7 +141,7 @@ function createFlower() {
       color: 0xffe9a8,
       roughness: 0.5,
       emissive: 0xffc94d,
-      emissiveIntensity: 1.0,
+      emissiveIntensity: 0.55,
     })
   );
   center.position.y = 0.1 * s;
@@ -179,7 +179,7 @@ const fallMat = new THREE.MeshStandardMaterial({
   transparent: true,
   opacity: 0.9,
   emissive: 0xff6fae,
-  emissiveIntensity: 0.5,
+  emissiveIntensity: 0.25,
 });
 for (let i = 0; i < (isMobile ? 18 : 40); i++) {
   const p = new THREE.Mesh(makePetalGeometry(0.09, 0.14, 0.6), fallMat);
@@ -212,7 +212,7 @@ function glowTexture() {
 const fireflies = [];
 const fireflyCount = isMobile ? 25 : 60;
 const fireflyMat = new THREE.PointsMaterial({
-  size: 0.16,
+  size: 0.11,
   map: glowTexture(),
   color: 0xffe9a8,
   transparent: true,
@@ -299,9 +299,9 @@ const composer = new EffectComposer(renderer);
 composer.addPass(new RenderPass(scene, camera));
 const bloom = new UnrealBloomPass(
   new THREE.Vector2(window.innerWidth, window.innerHeight),
-  isMobile ? 0.7 : 0.95,
-  0.55,
-  0.18
+  isMobile ? 0.4 : 0.55,
+  0.45,
+  0.35
 );
 composer.addPass(bloom);
 composer.addPass(new OutputPass());
@@ -360,7 +360,7 @@ function animate() {
     pos.setZ(i, fireflyPos[i * 3 + 2] + Math.cos(t * 0.6 + seed) * 0.4);
   }
   pos.needsUpdate = true;
-  fireflyMat.opacity = 0.75 + Math.sin(t * 0.8) * 0.25;
+  fireflyMat.opacity = 0.45 + Math.sin(t * 0.8) * 0.2;
 
   for (let i = bursts.length - 1; i >= 0; i--) {
     const p = bursts[i];
