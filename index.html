@@ -21,8 +21,17 @@
   <meta name="twitter:image" content="https://danielosinor123-gif.github.io/og-image.png" />
 
   <link rel="stylesheet" href="styles.css" />
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.160.0/build/three.module.js"
+      }
+    }
+  </script>
 </head>
 <body>
+  <canvas id="flower-canvas" aria-hidden="true"></canvas>
+
   <header class="nav">
     <a href="#hero" class="nav-logo">MO</a>
     <nav class="nav-links">
@@ -47,6 +56,7 @@
         <a href="resume.pdf" class="btn btn-ghost">View resume</a>
         <a href="#contact" class="btn btn-ghost">Get in touch</a>
       </div>
+      <p class="hero-hint">psst — click anywhere to grow a flower</p>
     </section>
 
     <section id="skills" class="section">
@@ -227,5 +237,6 @@
   </footer>
 
   <script src="script.js"></script>
+  <script type="module" src="flower.js"></script>
 </body>
 </html>
