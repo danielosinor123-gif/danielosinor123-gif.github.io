@@ -7,9 +7,14 @@ import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 const canvas = document.getElementById('flower-canvas');
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const isMobile = window.innerWidth < 700;
+const lowPower = isMobile || (navigator.deviceMemory && navigator.deviceMemory <= 4);
 
-const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.75));
+const SUPERSAMPLE = lowPower ? 1 : 1.25;
+const MAX_DPR = isMobile ? 2 : 3;
+const MSAA = isMobile ? 2 : 4;
+
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
+renderer.setPixelRatio(Math.min((window.devicePixelRatio || 1) * SUPERSAMPLE, MAX_DPR));
 renderer.setSize(window.innerWidth, window.innerHeight);
 
 const scene = new THREE.Scene();
@@ -39,6 +44,19 @@ const ground = new THREE.Mesh(
 ground.rotation.x = -Math.PI / 2;
 scene.add(ground);
 
+/* Theme-aware scene colors (light / dark) */
+const THEME_COLORS = {
+  dark: { fog: 0x0d0e12, ground: 0x121318 },
+  light: { fog: 0xeceae2, ground: 0xdedbd1 },
+};
+function applyFlowerTheme(theme) {
+  const c = THEME_COLORS[theme] || THEME_COLORS.dark;
+  scene.fog.color.setHex(c.fog);
+  ground.material.color.setHex(c.ground);
+}
+window.setFlowerTheme = applyFlowerTheme;
+applyFlowerTheme(window.__initialTheme || 'dark');
+
 const FLOWER_COLORS = [0xff6fae, 0xffd700, 0xff8c42, 0xc77dff, 0x7ce7c4, 0xff4d6d, 0xffe066, 0x90dbf4];
 
 function easeOutBack(x) {
@@ -56,7 +74,7 @@ function petalShape(width, height) {
 }
 
 function makePetalGeometry(width, height, curl) {
-  const geo = new THREE.ShapeGeometry(petalShape(width, height), 14);
+  const geo = new THREE.ShapeGeometry(petalShape(width, height), 64);
   const pos = geo.attributes.position;
   for (let i = 0; i < pos.count; i++) {
     const x = pos.getX(i);
@@ -103,7 +121,7 @@ function createFlower() {
   const color = FLOWER_COLORS[(Math.random() * FLOWER_COLORS.length) | 0];
 
   const stem = new THREE.Mesh(
-    new THREE.CylinderGeometry(0.03 * s, 0.055 * s, 2.0 * s, 7),
+    new THREE.CylinderGeometry(0.03 * s, 0.055 * s, 2.0 * s, 16),
     new THREE.MeshStandardMaterial({ color: 0x3d8c5a, roughness: 0.8 })
   );
   stem.position.y = -1.0 * s;
@@ -136,7 +154,7 @@ function createFlower() {
   head.add(inner);
 
   const center = new THREE.Mesh(
-    new THREE.SphereGeometry(0.11 * s, 16, 12),
+    new THREE.SphereGeometry(0.11 * s, 32, 24),
     new THREE.MeshStandardMaterial({
       color: 0xffe9a8,
       roughness: 0.5,
@@ -154,12 +172,13 @@ function createFlower() {
     speed: 0.4 + Math.random() * 0.8,
     sway: 0.02 + Math.random() * 0.05,
     growth: reducedMotion ? 1 : 0,
+    delay: Math.random() * 1.6,
   };
   return group;
 }
 
 const flowers = [];
-const flowerCount = isMobile ? 14 : 26;
+const flowerCount = isMobile ? 10 : 18;
 for (let i = 0; i < flowerCount; i++) {
   const f = createFlower();
   const angle = Math.random() * Math.PI * 2;
@@ -181,7 +200,7 @@ const fallMat = new THREE.MeshStandardMaterial({
   emissive: 0xff6fae,
   emissiveIntensity: 0.25,
 });
-for (let i = 0; i < (isMobile ? 18 : 40); i++) {
+for (let i = 0; i < (isMobile ? 12 : 26); i++) {
   const p = new THREE.Mesh(makePetalGeometry(0.09, 0.14, 0.6), fallMat);
   p.userData = {
     speed: 0.3 + Math.random() * 0.6,
@@ -210,7 +229,7 @@ function glowTexture() {
 }
 
 const fireflies = [];
-const fireflyCount = isMobile ? 25 : 60;
+const fireflyCount = isMobile ? 18 : 40;
 const fireflyMat = new THREE.PointsMaterial({
   size: 0.11,
   map: glowTexture(),
@@ -274,28 +293,49 @@ window.addEventListener('pointermove', (e) => {
   lastMove = performance.now();
 });
 
+function spawnFlowerAt(x, z) {
+  const f = createFlower();
+  f.position.set(x, 0, z);
+  f.scale.setScalar(0.001);
+  scene.add(f);
+  flowers.push(f);
+  return f;
+}
+
 window.addEventListener('click', (e) => {
-  if (e.target.closest('a, button')) return;
+  if (e.target.closest('a, button, input, textarea')) return;
   ndc.set((e.clientX / window.innerWidth) * 2 - 1, -(e.clientY / window.innerHeight) * 2 + 1);
   ray.setFromCamera(ndc, camera);
   const hit = ray.ray.intersectPlane(groundPlane, new THREE.Vector3());
   if (!hit) return;
-  const f = createFlower();
-  f.position.set(hit.x, 0, hit.z);
-  f.scale.setScalar(0.001);
-  scene.add(f);
-  flowers.push(f);
+  spawnFlowerAt(hit.x, hit.z);
+  spawnBurst(hit.x, hit.z);
+});
+
+window.addEventListener('petal-burst', (e) => {
+  ndc.set((e.detail.x / window.innerWidth) * 2 - 1, -(e.detail.y / window.innerHeight) * 2 + 1);
+  ray.setFromCamera(ndc, camera);
+  const hit = ray.ray.intersectPlane(groundPlane, new THREE.Vector3());
+  if (!hit) return;
   spawnBurst(hit.x, hit.z);
 });
 
 window.addEventListener('resize', () => {
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
+  renderer.setPixelRatio(Math.min((window.devicePixelRatio || 1) * SUPERSAMPLE, MAX_DPR));
   renderer.setSize(window.innerWidth, window.innerHeight);
+  composer.setPixelRatio(renderer.getPixelRatio());
   composer.setSize(window.innerWidth, window.innerHeight);
 });
 
-const composer = new EffectComposer(renderer);
+const composerRT = new THREE.WebGLRenderTarget(
+  window.innerWidth,
+  window.innerHeight,
+  { samples: MSAA, type: THREE.HalfFloatType }
+);
+const composer = new EffectComposer(renderer, composerRT);
+composer.setPixelRatio(renderer.getPixelRatio());
 composer.addPass(new RenderPass(scene, camera));
 const bloom = new UnrealBloomPass(
   new THREE.Vector2(window.innerWidth, window.innerHeight),
@@ -323,6 +363,10 @@ function animate() {
   target.y += (mouse.y - target.y) * 0.05;
   if (idle) autoT += dt * 0.06;
 
+  const scrollVel = window.__scrollVel || 0;
+  const wind = Math.min(scrollVel * 0.04, 1.6);
+  const windLean = Math.sin(t * 0.55) * wind * 0.14;
+
   camera.position.x = idle ? Math.sin(autoT) * 1.6 : target.x * 1.1;
   camera.position.y = 2.2 - target.y * 0.5 + Math.min(scrollY * 0.0015, 0.8);
   camera.lookAt(0, 0.9, 0);
@@ -330,12 +374,16 @@ function animate() {
   for (const f of flowers) {
     const u = f.userData;
     if (u.growth < 1) {
-      u.growth = Math.min(1, u.growth + dt * 0.85);
-      f.scale.setScalar(easeOutBack(u.growth));
+      if (u.delay > 0) {
+        u.delay -= dt;
+      } else {
+        u.growth = Math.min(1, u.growth + dt * 0.85);
+        f.scale.setScalar(easeOutBack(u.growth));
+      }
     }
-    const sway = Math.sin(t * u.speed + u.phase) * u.sway;
+    const sway = (Math.sin(t * u.speed + u.phase) * u.sway + windLean) * (1 + wind);
     f.rotation.z = sway;
-    f.rotation.x = Math.cos(t * u.speed * 0.8 + u.phase) * u.sway * 0.7;
+    f.rotation.x = (Math.cos(t * u.speed * 0.8 + u.phase) * u.sway * 0.7 + windLean * 0.6) * (1 + wind);
     u.head.rotation.y = Math.sin(t * u.speed * 0.5 + u.phase) * 0.08;
   }
 
