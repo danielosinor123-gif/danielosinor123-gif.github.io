@@ -509,7 +509,7 @@
         const subject = encodeURIComponent(`Portfolio message from ${name}`);
         const body = encodeURIComponent(`${message}\n\n— ${name} (${email})`);
         window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
-        setStatus('Opening your email app so you can send the message…', true);
+        setStatus(`Your email app should open with the message ready. If it didn’t, email me directly: ${to}`, true);
         petalBurst(window.innerWidth / 2, form.getBoundingClientRect().top);
         return;
       }
