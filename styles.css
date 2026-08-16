@@ -1193,30 +1193,3 @@ main {
     display: none;
   }
 }
-
-/* Toast (copy-to-clipboard feedback, stays in-page) */
-.toast {
-  position: fixed;
-  left: 50%;
-  bottom: 2rem;
-  transform: translate(-50%, 1rem);
-  background: var(--accent);
-  color: #fff;
-  padding: 0.7rem 1.1rem;
-  border-radius: 999px;
-  font-size: 0.9rem;
-  font-weight: 600;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.25s ease, transform 0.25s ease;
-  z-index: 2000;
-  max-width: 90vw;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.toast.is-visible {
-  opacity: 1;
-  transform: translate(-50%, 0);
-}
