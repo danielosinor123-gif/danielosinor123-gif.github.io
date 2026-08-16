@@ -502,8 +502,12 @@
         return;
       }
 
-      const mode = SITE.formMode || 'mailto';
+      let mode = SITE.formMode || 'mailto';
       const to = SITE.contact?.email || 'danielosinor123@gmail.com';
+
+      if (mode === 'emailjs' && (!SITE.EMAILJS_PUBLIC_KEY || !SITE.EMAILJS_SERVICE_ID || !SITE.EMAILJS_TEMPLATE_ID || typeof emailjs === 'undefined')) {
+        mode = 'mailto';
+      }
 
       if (mode === 'mailto') {
         const subject = encodeURIComponent(`Portfolio message from ${name}`);
@@ -521,7 +525,15 @@
 
       try {
         let res;
-        if (mode === 'formspree' && SITE.FORMSPREE_ENDPOINT) {
+        if (mode === 'emailjs' && SITE.EMAILJS_PUBLIC_KEY && typeof emailjs !== 'undefined') {
+          await emailjs.send(
+            SITE.EMAILJS_SERVICE_ID,
+            SITE.EMAILJS_TEMPLATE_ID,
+            { name, email, message, from_name: name, from_email: email, reply_to: email, to_email: to },
+            { publicKey: SITE.EMAILJS_PUBLIC_KEY }
+          );
+          res = { ok: true };
+        } else if (mode === 'formspree' && SITE.FORMSPREE_ENDPOINT) {
           res = await fetch(SITE.FORMSPREE_ENDPOINT, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', Accept: 'application/json' },

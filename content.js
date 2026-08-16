@@ -77,8 +77,12 @@ window.SITE = {
   // Contact form backend. Options:
   //  - "supabase": uses SUPABASE_URL + SUPABASE_ANON_KEY below
   //  - "formspree": uses FORMSPREE_ENDPOINT below
+  //  - "emailjs": uses EMAILJS_* below (delivers straight to your inbox, no sender mail app needed)
   //  - "mailto": opens the user's mail client pre-filled (always works, no backend)
-  formMode: "mailto",
+  formMode: "emailjs",
+  EMAILJS_PUBLIC_KEY: "WCXOay1y-Se-94OU2",
+  EMAILJS_SERVICE_ID: "service_j05bo1f",
+  EMAILJS_TEMPLATE_ID: "template_b4vju0l",
   SUPABASE_URL: "https://ncmebnrbszlxhkrmvhxy.supabase.co",
   SUPABASE_ANON_KEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5jbWVibnJic3pseGhrcm12aHh5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAyMjk1NDQsImV4cCI6MjA5NTgwNTU0NH0.LoXOQZlKHURUmgm3iXCYZa53Fg47_7oQBvrxmICdZ08",
   SUPABASE_TABLE: "contact_messages",
