@@ -374,11 +374,9 @@
 
   function lockScroll() {
     document.body.classList.add('modal-open');
-    if (lenis) lenis.stop();
   }
   function unlockScroll() {
     document.body.classList.remove('modal-open');
-    if (lenis) lenis.start();
   }
 
   function openModal(p) {
@@ -422,6 +420,7 @@
   }
 
   document.querySelectorAll('.modal').forEach((m) => {
+    m.setAttribute('data-lenis-prevent', '');
     m.querySelectorAll('[data-close]').forEach((el) => el.addEventListener('click', closeAnyModal));
   });
   document.addEventListener('keydown', (e) => {
