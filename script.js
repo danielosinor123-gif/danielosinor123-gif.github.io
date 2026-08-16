@@ -9,6 +9,18 @@
 
   document.getElementById('year').textContent = new Date().getFullYear();
 
+  const revealObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-in');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.1 }
+  );
+
   /* =====================================================================
      CONTENT RENDERING
   ===================================================================== */
@@ -205,18 +217,6 @@
   /* =====================================================================
      CARD REVEAL ON SCROLL
   ===================================================================== */
-  const revealObserver = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-in');
-          revealObserver.unobserve(entry.target);
-        }
-      });
-    },
-    { threshold: 0.1 }
-  );
-
   function observeReveals() {
     document
       .querySelectorAll('.featured-card:not(.is-in), .project-card:not(.is-in)')
