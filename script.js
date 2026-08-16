@@ -526,13 +526,13 @@
       try {
         let res;
         if (mode === 'emailjs' && SITE.EMAILJS_PUBLIC_KEY && typeof emailjs !== 'undefined') {
-          await emailjs.send(
+          if (emailjs.init) emailjs.init({ publicKey: SITE.EMAILJS_PUBLIC_KEY });
+          const result = await emailjs.send(
             SITE.EMAILJS_SERVICE_ID,
             SITE.EMAILJS_TEMPLATE_ID,
-            { name, email, message, from_name: name, from_email: email, reply_to: email, to_email: to },
-            { publicKey: SITE.EMAILJS_PUBLIC_KEY }
+            { name, email, message, from_name: name, from_email: email, reply_to: email, to_email: to }
           );
-          res = { ok: true };
+          res = { ok: result && (result.status === 200 || result.status === undefined) };
         } else if (mode === 'formspree' && SITE.FORMSPREE_ENDPOINT) {
           res = await fetch(SITE.FORMSPREE_ENDPOINT, {
             method: 'POST',
@@ -557,8 +557,10 @@
         form.reset();
         setStatus('Message sent — I’ll get back to you soon!', true);
         petalBurst(window.innerWidth / 2, submitBtn.getBoundingClientRect().top);
-      } catch {
-        setStatus(`Couldn’t send — please email me directly: ${to}`, false);
+      } catch (err) {
+        console.error('Contact form error:', err);
+        const detail = (err && (err.text || err.message)) || err;
+        setStatus(`Couldn’t send (${detail}). Email me directly: ${to}`, false);
       } finally {
         const b = form.querySelector('.form-submit');
         b.disabled = false;
