@@ -372,6 +372,15 @@
   const resumeModal = document.getElementById('resume-modal');
   let lastFocused = null;
 
+  function lockScroll() {
+    document.body.classList.add('modal-open');
+    if (lenis) lenis.stop();
+  }
+  function unlockScroll() {
+    document.body.classList.remove('modal-open');
+    if (lenis) lenis.start();
+  }
+
   function openModal(p) {
     if (!modal) return;
     lastFocused = document.activeElement;
@@ -388,6 +397,7 @@
     modalLink.href = p.href || '#';
     modal.classList.add('is-open');
     modal.setAttribute('aria-hidden', 'false');
+    lockScroll();
     onScrollUI();
     modal.querySelector('.modal-close')?.focus();
   }
@@ -397,6 +407,7 @@
     lastFocused = document.activeElement;
     resumeModal.classList.add('is-open');
     resumeModal.setAttribute('aria-hidden', 'false');
+    lockScroll();
     onScrollUI();
     resumeModal.querySelector('.modal-close')?.focus();
   }
@@ -406,6 +417,7 @@
     if (!open) return;
     open.classList.remove('is-open');
     open.setAttribute('aria-hidden', 'true');
+    unlockScroll();
     if (lastFocused && lastFocused.focus) lastFocused.focus();
   }
 
