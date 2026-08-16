@@ -294,6 +294,17 @@ window.addEventListener('pointermove', (e) => {
 });
 
 function spawnFlowerAt(x, z) {
+  if (flowers.length > 80) {
+    const old = flowers.shift();
+    scene.remove(old);
+    old.traverse((o) => {
+      if (o.geometry) o.geometry.dispose();
+      if (o.material) {
+        if (Array.isArray(o.material)) o.material.forEach((m) => m.dispose());
+        else o.material.dispose();
+      }
+    });
+  }
   const f = createFlower();
   f.position.set(x, 0, z);
   f.scale.setScalar(0.001);
@@ -303,7 +314,8 @@ function spawnFlowerAt(x, z) {
 }
 
 window.addEventListener('click', (e) => {
-  if (e.target.closest('a, button, input, textarea')) return;
+  if (e.target.closest('a, button, input, textarea, select, label')) return;
+  if (document.querySelector('.modal.is-open')) return;
   ndc.set((e.clientX / window.innerWidth) * 2 - 1, -(e.clientY / window.innerHeight) * 2 + 1);
   ray.setFromCamera(ndc, camera);
   const hit = ray.ray.intersectPlane(groundPlane, new THREE.Vector3());
