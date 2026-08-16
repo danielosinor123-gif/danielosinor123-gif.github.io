@@ -133,13 +133,94 @@
     </div>
   </div>
 
-  <div id="resume-modal" class="modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="resume-title">
+  <div id="resume-modal" class="modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="resume-name">
     <div class="modal-backdrop" data-close></div>
     <div class="modal-panel modal-panel-wide" role="document">
       <button class="modal-close icon-btn" type="button" data-close aria-label="Close">&times;</button>
-      <h3 id="resume-title" class="modal-title">Resume</h3>
-      <iframe id="resume-frame" class="modal-frame" data-src="resume.pdf" title="Resume of Momoh Daniel Osinor"></iframe>
-      <a class="btn btn-ghost" href="resume.pdf" target="_blank" rel="noopener" download>Download PDF</a>
+      <div class="resume">
+        <header class="resume-header">
+          <h3 id="resume-name" class="resume-name">Daniel Momoh Osinor</h3>
+          <p class="resume-role">Full-Stack Backend Engineer · AI Systems Engineer</p>
+          <p class="resume-contact">
+            <span>Nigeria</span>
+            <a href="tel:+2349068332520">09068332520</a>
+            <a href="mailto:danielosinor123@gmail.com">danielosinor123@gmail.com</a>
+            <a href="https://github.com/danielosinor123-gif" target="_blank" rel="noopener">github.com/danielosinor123-gif</a>
+          </p>
+        </header>
+
+        <h4>Professional Summary</h4>
+        <p>
+          Backend engineer focused on AI-powered applications, scalable APIs, and distributed systems, with a
+          track record of designing complete software systems end-to-end — from architecture through deployment.
+          Comfortable across the stack, with particular strength in backend infrastructure, API design, and
+          integrating LLMs into production-inspired tooling. Emphasis on clean code, modularity, maintainability,
+          and performance.
+        </p>
+
+        <h4>Technical Skills</h4>
+        <ul class="resume-skills">
+          <li><strong>Languages &amp; Frameworks:</strong> Python, TypeScript, JavaScript, FastAPI, Django, React, Next.js</li>
+          <li><strong>Data &amp; Infrastructure:</strong> PostgreSQL, SQLite, Redis, SQLAlchemy, Prisma, REST APIs, WebSockets</li>
+          <li><strong>AI / Systems:</strong> AI/LLM Integration, Authentication, System Design, Software Architecture, Performance Optimization</li>
+          <li><strong>Tools:</strong> Git, Docker-ready workflows, CI-friendly project structures</li>
+        </ul>
+
+        <h4>Selected Engineering Projects</h4>
+        <div class="resume-project">
+          <h5>Rubrix <span class="tech">— React, FastAPI, Groq (Llama 3.3 70B), SQLite</span></h5>
+          <ul>
+            <li>Built an AI-powered rubric evaluation platform to make scoring LLM responses consistent and scalable.</li>
+            <li>Implemented rubric generation, automated AI evaluation, and model comparison with modular backend services.</li>
+            <li>Added JSON generation/validation with automatic repair, retry logic, and dependency injection for reliability.</li>
+            <li>Supported file ingestion (PDF/DOCX/TXT), weight normalization, and export to PDF/CSV/JSON.</li>
+          </ul>
+          <a href="https://github.com/danielosinor123-gif/Rubrix" target="_blank" rel="noopener">github.com/danielosinor123-gif/Rubrix</a>
+        </div>
+        <div class="resume-project">
+          <h5>LinkForge <span class="tech">— Python, Next.js, PostgreSQL, Redis, Prisma</span></h5>
+          <ul>
+            <li>Designed a smart link management platform with URL shortening, QR-code generation, and analytics dashboards.</li>
+            <li>Built REST APIs with validation and authentication, backed by PostgreSQL persistence and Redis caching.</li>
+            <li>Implemented asynchronous click tracking and a high-speed redirect pipeline for low-latency lookups.</li>
+          </ul>
+          <a href="https://github.com/danielosinor123-gif/linkforge" target="_blank" rel="noopener">github.com/danielosinor123-gif/linkforge</a>
+        </div>
+        <div class="resume-project">
+          <h5>TaskFlow <span class="tech">— React, Express, Socket.IO, PostgreSQL, Prisma</span></h5>
+          <ul>
+            <li>Developed a collaborative Kanban project management platform with JWT authentication and sprint planning.</li>
+            <li>Enabled real-time synchronization via WebSockets, plus drag-and-drop tasks and automation workflows.</li>
+            <li>Integrated Git-linked workflows to demonstrate full-stack SaaS architecture and real-time collaboration.</li>
+          </ul>
+          <a href="https://github.com/danielosinor123-gif/taskflow" target="_blank" rel="noopener">github.com/danielosinor123-gif/taskflow</a>
+        </div>
+        <div class="resume-project">
+          <h5>EdgeGateway <span class="tech">— Rust, Axum, Redis, WebAssembly</span></h5>
+          <ul>
+            <li>Engineered a high-performance API gateway with middleware pipelines, request routing, and rate limiting.</li>
+            <li>Explored edge-oriented infrastructure concepts, authentication, and observability at the gateway layer.</li>
+          </ul>
+          <a href="https://github.com/danielosinor123-gif/edgegateway" target="_blank" rel="noopener">github.com/danielosinor123-gif/edgegateway</a>
+        </div>
+        <div class="resume-project">
+          <h5>BlogEngine <span class="tech">— Next.js, MDX, Tailwind CSS</span></h5>
+          <ul>
+            <li>Created a Markdown-first publishing platform supporting MDX, multiple themes, and static rendering.</li>
+            <li>Focused on SEO optimization, RSS feeds, syntax highlighting, and maintainable content architecture.</li>
+          </ul>
+          <a href="https://github.com/danielosinor123-gif/blogengine" target="_blank" rel="noopener">github.com/danielosinor123-gif/blogengine</a>
+        </div>
+
+        <h4>Objective</h4>
+        <p>
+          Seeking a backend engineering role — remote or contract — where I can build AI infrastructure, scalable
+          backend services, and distributed systems, while continuing to grow in cloud-native and AI-enabled
+          application development.
+        </p>
+
+        <a class="btn btn-ghost" href="resume.pdf" target="_blank" rel="noopener" download>Download PDF</a>
+      </div>
     </div>
   </div>
 

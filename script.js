@@ -370,7 +370,6 @@
   const modalTags = document.getElementById('modal-tags');
   const modalLink = document.getElementById('modal-link');
   const resumeModal = document.getElementById('resume-modal');
-  const resumeFrame = document.getElementById('resume-frame');
   let lastFocused = null;
 
   function openModal(p) {
@@ -396,7 +395,6 @@
   function openResume() {
     if (!resumeModal) return;
     lastFocused = document.activeElement;
-    if (resumeFrame && !resumeFrame.src) resumeFrame.src = resumeFrame.dataset.src;
     resumeModal.classList.add('is-open');
     resumeModal.setAttribute('aria-hidden', 'false');
     onScrollUI();
