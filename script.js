@@ -369,6 +369,8 @@
   const modalDesc = document.getElementById('modal-desc');
   const modalTags = document.getElementById('modal-tags');
   const modalLink = document.getElementById('modal-link');
+  const resumeModal = document.getElementById('resume-modal');
+  const resumeFrame = document.getElementById('resume-frame');
   let lastFocused = null;
 
   function openModal(p) {
@@ -391,16 +393,38 @@
     modal.querySelector('.modal-close')?.focus();
   }
 
-  function closeModal() {
-    if (!modal) return;
-    modal.classList.remove('is-open');
-    modal.setAttribute('aria-hidden', 'true');
+  function openResume() {
+    if (!resumeModal) return;
+    lastFocused = document.activeElement;
+    if (resumeFrame && !resumeFrame.src) resumeFrame.src = resumeFrame.dataset.src;
+    resumeModal.classList.add('is-open');
+    resumeModal.setAttribute('aria-hidden', 'false');
+    onScrollUI();
+    resumeModal.querySelector('.modal-close')?.focus();
+  }
+
+  function closeAnyModal() {
+    const open = document.querySelector('.modal.is-open');
+    if (!open) return;
+    open.classList.remove('is-open');
+    open.setAttribute('aria-hidden', 'true');
     if (lastFocused && lastFocused.focus) lastFocused.focus();
   }
 
-  modal?.querySelectorAll('[data-close]').forEach((el) => el.addEventListener('click', closeModal));
+  document.querySelectorAll('.modal').forEach((m) => {
+    m.querySelectorAll('[data-close]').forEach((el) => el.addEventListener('click', closeAnyModal));
+  });
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && modal && modal.classList.contains('is-open')) closeModal();
+    if (e.key === 'Escape') closeAnyModal();
+  });
+
+  // Open resume in-page (embedded PDF) instead of navigating away
+  document.querySelectorAll('a[href$="resume.pdf"]').forEach((a) => {
+    if (a.hasAttribute('download')) return;
+    a.addEventListener('click', (e) => {
+      e.preventDefault();
+      openResume();
+    });
   });
 
   /* =====================================================================
