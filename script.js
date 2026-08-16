@@ -554,4 +554,51 @@
       }
     });
   }
+
+  /* =====================================================================
+     COPY-TO-CLIPBOARD (phone stays in-page, never navigates away)
+  ===================================================================== */
+  let toastEl = null;
+  let toastTimer = null;
+  function showToast(msg) {
+    if (!toastEl) {
+      toastEl = document.createElement('div');
+      toastEl.className = 'toast';
+      toastEl.setAttribute('role', 'status');
+      document.body.appendChild(toastEl);
+    }
+    toastEl.textContent = msg;
+    toastEl.classList.add('is-visible');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toastEl.classList.remove('is-visible'), 2400);
+  }
+  async function copyText(text) {
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(text);
+        return true;
+      }
+    } catch (_) {}
+    try {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      const ok = document.execCommand('copy');
+      document.body.removeChild(ta);
+      return ok;
+    } catch (_) {
+      return false;
+    }
+  }
+  document.addEventListener('click', async (e) => {
+    const a = e.target.closest('a[href^="tel:"]');
+    if (!a) return;
+    e.preventDefault();
+    const value = a.getAttribute('href').replace(/^tel:/, '');
+    const ok = await copyText(value);
+    showToast(ok ? `Phone copied: ${value}` : `Phone: ${value}`);
+  });
 })();
